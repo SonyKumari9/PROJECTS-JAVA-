@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>ATM Signup - SBI</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      background-color: #e6f2ff;
+      font-family: Arial, sans-serif;
+    }
+    .form-container {
+      background: white;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px #ccc;
+    }
+    .sbi-header {
+      color: #003366;
+      font-weight: bold;
+      font-size: 28px;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container mt-5">
+  <div class="form-container">
+
+    <!-- Top Layout -->
+    <div class="row align-items-center mb-4">
+      <div class="col-md-2">
+        <img src="images/sbi_logo.jpg" alt="Bank" width="90%">
+      </div>
+      <div class="col-md-8 text-center sbi-header">
+        Create New ATM Account
+      </div>
+      <div class="col-md-2 text-end">
+        <label><strong>Status:</strong></label><br>
+        <span>Signup</span>
+      </div>
+    </div>
+
+    <!-- Signup Form -->
+    <form onsubmit="createAccount(event)">
+      <div class="mb-3">
+        <label>Card Number:</label>
+        <input type="text" class="form-control" id="cardNo" required placeholder="Enter 16-digit Card Number" maxlength="12">
+      </div>
+      <div class="mb-3">
+        <label>PIN:</label>
+        <input type="password" class="form-control" id="pin" required maxlength="4" placeholder="Enter 4-digit PIN">
+      </div>
+      <div class="mb-3">
+        <label>Name:</label>
+        <input type="text" class="form-control" id="name" required placeholder="Enter Full Name">
+      </div>
+
+      <div class="text-center">
+        <button type="submit" class="btn btn-dark me-2">Create Account</button>
+        <button type="button" class="btn btn-secondary" onclick="window.location.href='login.html'">Back to Login</button>
+      </div>
+    </form>
+
+  </div>
+</div>
+
+<script>
+  function createAccount(e) {
+    e.preventDefault();
+    const payload = {
+      cardNo: document.getElementById("cardNo").value,
+      pin: document.getElementById("pin").value,
+      name: document.getElementById("name").value
+    };
+
+    fetch("http://localhost:8087/atm/create", {
+      method: "POST",
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    })
+    .then(res => {
+      if (!res.ok) throw new Error("Card already exists or error in data.");
+      alert("Account Created Successfully!");
+      window.location.href = "login.html";
+    })
+    .catch(err => alert(" " + err.message));
+  }
+</script>
+
+</body>
+</html>

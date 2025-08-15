@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Change PIN</title>
+  <link rel="stylesheet" href="css/pinchange.css">
+
+</head>
+<body>
+
+<div class="screen">
+  <!-- Inside <div class="screen"> -->
+<h2>CHANGE YOUR PIN</h2>
+
+<label for="accountNo">Account Number:</label>
+<input type="text" id="accountNo" maxlength="16" placeholder="Enter Account Number">
+
+<label for="newPin">New PIN:</label>
+<input type="password" id="newPin" maxlength="4" placeholder="Enter 4-digit PIN">
+
+<label for="rePin">Re-Enter New PIN:</label>
+<input type="password" id="rePin" maxlength="4" placeholder="Re-enter 4-digit PIN">
+
+  <div class="buttons" style="margin-top: 100px;">
+    <button class="btn-change" onclick="changePin()">CHANGE</button>
+    <button class="btn-back" onclick="window.location.href='dashboard.html'">BACK</button>
+  </div>
+</div>
+
+<script>
+  function changePin() {
+  const pin1 = document.getElementById("newPin").value;
+  const pin2 = document.getElementById("rePin").value;
+  const cardNo = document.getElementById("accountNo").value;
+
+  if (!cardNo || cardNo.length < 6) {
+    alert("Please enter a valid account number.");
+    return;
+  }
+
+  if (!pin1 || pin1.length !== 4) {
+    alert("Please enter a valid 4-digit PIN.");
+    return;
+  }
+
+  if (pin1 !== pin2) {
+    alert("PINs do not match.");
+    return;
+  }
+
+  fetch("http://localhost:8087/atm/updatePin", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ cardNo: cardNo, newPin: pin1 })
+  })
+  .then(res => res.ok ? res.text() : Promise.reject("Failed to update PIN"))
+  .then(msg => {
+    alert(msg || "PIN changed successfully!");
+    window.location.href = "dashboard.html";
+  })
+  .catch(err => alert(err));
+}
+
+</script>
+
+</body>
+</html>

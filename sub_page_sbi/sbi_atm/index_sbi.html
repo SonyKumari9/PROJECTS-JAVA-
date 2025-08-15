@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>SBI Portal</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(to right, #0f1f49, #1b2a66);
+      color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .container {
+      text-align: center;
+      padding: 30px;
+      background-color: #ffffff10;
+      border-radius: 15px;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.3);
+    }
+
+    .sbi-logo {
+      font-size: 32px;
+      font-weight: bold;
+      margin-bottom: 20px;
+    }
+
+    .sbi-logo span {
+      color: #00bfff;
+    }
+
+    .sbi-button {
+      background-color: #002867;
+      border: none;
+      color: white;
+      padding: 15px 40px;
+      font-size: 18px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    }
+
+    .sbi-button:hover {
+      background-color: #0052cc;
+      transform: scale(1.05);
+    }
+
+    .footer {
+      margin-top: 20px;
+      font-size: 14px;
+      color: #ccc;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="sbi-logo">State Bank of <span>India</span></div>
+    <p>Click below to open the next <strong>SBI project securely</strong>.</p>
+    <button class="sbi-button" onclick="openProject()">Open Project</button>
+    <div class="footer">© SBI Demo | Secure Banking Interface</div>
+  </div>
+
+  <script>
+    function openProject() {
+      
+      window.location.href = "login.html";
+    }
+  </script>
+</body>
+</html>

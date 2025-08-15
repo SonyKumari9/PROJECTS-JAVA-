@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>ATM Fast Cash</title>
+  <link rel="stylesheet" href="css/fastcash.css">
+
+</head>
+<body>
+
+<div class="screen">
+  <h2 style="margin-left: 77px; margin-bottom: 10px;">SELECT WITHDRAWAL AMOUNT</h2>
+
+  <div class="buttons-container">
+    <div class="button-group" style="margin-top: 50px; margin-right: 50px;">
+      <button onclick="withdraw(100)">RS. 100</button>
+      <button onclick="withdraw(1000)">RS. 1000</button>
+      <button onclick="withdraw(5000)">RS. 5000</button>
+    </div>
+    <div class="button-group" style="margin-top: 50px; margin-right: 50px;">
+      <button onclick="withdraw(500)">RS. 500</button>
+      <button onclick="withdraw(2000)">RS. 2000</button>
+      <button onclick="withdraw(10000)">RS. 10000</button>
+    </div>
+  </div>
+
+  <div class="bottom-center">
+    <button class="back-btn" style="width: 200px;" onclick="window.location.href='dashboard.html'">BACK</button>
+  </div>
+</div>
+
+<script>
+  function withdraw(amount) {
+    const cardNo = localStorage.getItem("loggedCardNo");
+
+    fetch("http://localhost:8080/atm/withdraw", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ cardNo: cardNo, amount: amount })
+    });
+
+    window.location.href = "withdraw.html";
+  }
+</script>
+
+</body>
+</html>

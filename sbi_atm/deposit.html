@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>ATM Deposit</title>
+  <link rel="stylesheet" href="css/deposit.css">
+
+</head>
+<body>
+
+<div class="screen">
+  <h2>ENTER AMOUNT YOU WANT TO DEPOSIT</h2>
+
+  <!-- <input type="number" id="account_no" placeholder="Enter Account Number"> -->
+   <input type="text" id="account_no" placeholder="Enter 12-digit Account Number" maxlength="12" inputmode="numeric" pattern="\d{12}">
+   
+
+<br>
+<input type="password" id="pin" placeholder="Enter 4-digit PIN" maxlength="4" inputmode="numeric" >
+<br>
+<input type="number" id="amount" placeholder="Enter Amount">
+
+
+
+  <div class="buttons" style="margin-top: 80px; margin-left: 650px;">
+    <button onclick="depositAmount()">DEPOSIT</button>
+  </div>
+
+  <div class="buttons" style="margin-top: 20px; margin-left: 650px;">
+    <button class="back-btn" onclick="window.location.href='dashboard.html'" style="background-color: #b13d3d;">BACK</button>
+  </div>
+</div>
+
+<script>
+  function depositAmount() {
+    const account_no = document.getElementById("account_no").value.trim();
+    const pin = document.getElementById("pin").value.trim();
+    const amount = parseFloat(document.getElementById("amount").value);
+
+    if (!account_no || account_no.length < 4) {
+      alert("Please enter a valid account number.");
+      return;
+    }
+
+
+    if (!pin || pin.length !== 4) {
+  alert("Please enter a valid 4-digit PIN.");
+  return;
+}
+
+
+    if (!amount || amount <= 0) {
+      alert("Please enter a valid deposit amount.");
+      return;
+    }
+
+    const payload = {
+      cardNo: account_no,
+      amount: amount,
+      pin: pin
+    };
+
+    
+    localStorage.setItem("loggedCardNo", account_no);
+
+    fetch("http://localhost:8087/atm/deposit", {
+      method: "POST",
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    })
+    .then(res => res.ok ? res.text() : Promise.reject("Deposit failed"))
+    .then(msg => {
+      alert(msg);
+      window.location.href = "withdraw.html";  
+    })
+    .catch(err => alert(err));
+  }
+</script>
+
+</body>
+</html>

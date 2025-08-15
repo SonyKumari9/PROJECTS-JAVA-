@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>ATM Balance Inquiry</title>
+<link rel="stylesheet" href="css/balance.css">
+
+</head>
+<body>
+
+<div class="screen">
+  <h2>YOUR CURRENT BALANCE IS</h2>
+  <div id="balance">Loading...</div>
+
+
+  <input type="password" id="pin" maxlength="4" placeholder="Enter your 4-digit PIN" style="padding:10px; font-size:16px; margin-bottom: 20px; border-radius: 5px; text-align:center;">
+<button onclick="checkBalance()" style="margin-left: 575px;">Check Balance</button>
+
+<br>
+  <button onclick="window.location.href='dashboard.html'" style="margin-left: 575px; background-color: brown;">BACK</button>
+</div>
+
+<script>
+  function checkBalance() {
+  const pin = document.getElementById("pin").value.trim();
+
+  if (!pin || pin.length !== 4) {
+    alert("PIN missing or invalid.");
+    return;
+  }
+
+  fetch("http://localhost:8087/atm/balance/check", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ pin: pin })
+  })
+  .then(res => res.ok ? res.json() : Promise.reject("Balance check failed"))
+  .then(data => {
+    document.getElementById("balance").innerText = `Rs. ${data.balance}`;
+  })
+  .catch(err => {
+    document.getElementById("balance").innerText = err;
+  });
+}
+
+</script>
+
+</body>
+</html>

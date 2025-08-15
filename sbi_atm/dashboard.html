@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>ATM Dashboard - Step 2</title>
+
+ <link rel="stylesheet" href="css/dashboard.css">
+
+  
+</head>
+<body>
+
+<div class="screen">
+  <h2 style="margin-left: 50px; margin-bottom: 8px;"> SBI ATM <br>Please Select Your Transaction</h2>
+  <div class="buttons-container">
+    <div class="button-group" style="margin-top: 50px; margin-right: 50px;">
+      <button onclick="navigate('deposit.html')">DEPOSIT</button>
+      <button onclick="navigate('farstcase.html')">FAST CASH</button>
+      <button onclick="navigate('pin_change.html')">PIN CHANGE</button>
+    </div>
+    <div class="button-group" style="margin-top: 50px; margin-right: 50px;">
+      <button onclick="navigate('withdraw.html')">CASH WITHDRAWAL</button>
+      <button onclick="navigate('mini_statement.html')">MINI STATEMENT</button>
+      <button onclick="navigate('balance_enquiry.html')">BALANCE ENQUIRY</button>
+    </div>
+  </div>
+  <div style="position: absolute; bottom: 20px; width: 100%; text-align: center;">
+    <button onclick="logout()" style="background-color: #b13d3d; width: 150px; padding: 10px; border: none; border-radius: 5px; color: white; font-weight: bold;">EXIT</button>
+  </div>
+</div>
+
+<script>
+  function navigate(page) {
+    window.location.href = page;
+  }
+
+  function logout() {
+    localStorage.clear();
+    window.location.href = "login.html";
+  }
+</script>
+
+</body>
+</html>
